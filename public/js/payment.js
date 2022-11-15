@@ -19,8 +19,10 @@
         let session_id = data.response.sessionCheckoutId
         let order_id = data.response.paymentRequestId
         let merchant_name = data.response.storeName
-        console.log(data)
-        payment(session_id,merchant_name,order_id)
+        let line1 = data.response.line1
+        let line2 = data.response.line2
+       
+        payment(session_id,merchant_name,order_id,line1,line2)
     },
       error: function (request, error) {
           Swal.fire({
@@ -35,7 +37,7 @@
       },
 });
 
-payment=(session_id,merchant_name,order_id)=> {
+payment=(session_id,merchant_name,order_id,line1,line2)=> {
 
 
     Checkout.configure({
@@ -47,8 +49,8 @@ payment=(session_id,merchant_name,order_id)=> {
             merchant: {
                 name: merchant_name,
                 address: {
-                    line1: '',
-                    line2: ''
+                    line1: line1,
+                    line2: line2
                 }
             },
 
@@ -123,7 +125,7 @@ console.log('completeCallback');
 
         },
         error: function (request, error) {
-            
+
 
         },
     });
